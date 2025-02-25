@@ -1,0 +1,234 @@
+1) install git hub cli in windows:winget install --id GitHub.cli
+
+....
+C:\Users\Maheswaran>winget install --id GitHub.cli
+The `msstore` source requires that you view the following agreements before using.
+Terms of Transaction: https://aka.ms/microsoft-store-terms-of-transaction
+The source requires the current machine's 2-letter geographic region to be sent to the backend service to function properly (ex. "US").
+
+Do you agree to all the source agreements terms?
+[Y] Yes  [N] No: yes
+Found GitHub CLI [GitHub.cli] Version 2.67.0
+This application is licensed to you by its owner.
+Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Downloading https://github.com/cli/cli/releases/download/v2.67.0/gh_2.67.0_windows_amd64.msi
+  ██████████████████████████████  13.0 MB / 13.0 MB
+Successfully verified installer hash
+Starting package install...
+The installer will request to run as administrator, expect a prompt.
+Successfully installed
+.....
+
+2) TO move local project to git repo
+a) initiate git in your project: git init 
+
+...
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects
+$ git init
+Initialized empty Git repository in E:/zaid_mahe/python_zaid_projects/.git/
+
+...
+
+b) add and commit the files
+
+...
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects (master)
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .idea/
+        arp-spoofing/
+        charan_perimeter.py
+        mac_address_changer1.py
+        mac_address_changer2.py
+        mac_changer_commandlinearg.py
+        main.py
+        network-scanner/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects (master)
+$ git add .
+warning: in the working copy of '.idea/inspectionProfiles/profiles_settings.xml', LF will be replaced by CRLF the next time Git touches it
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects (master)
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .idea/.gitignore
+        new file:   .idea/inspectionProfiles/profiles_settings.xml
+        new file:   .idea/misc.xml
+        new file:   .idea/modules.xml
+        new file:   .idea/python_zaid_projects.iml
+        new file:   .idea/vcs.xml
+        new file:   arp-spoofing/arp-spoof.py
+        new file:   charan_perimeter.py
+        new file:   mac_address_changer1.py
+        new file:   mac_address_changer2.py
+        new file:   mac_changer_commandlinearg.py
+        new file:   main.py
+        new file:   network-scanner/network_scanner.py
+        new file:   network-scanner/network_scanner1_allinsubnet.py
+        new file:   network-scanner/networkscanner2.py
+
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects (master)
+$ git commit -m "initial commit for repo from python_zaid_projects"
+[master (root-commit) fb853b9] initial commit for repo from python_zaid_projects
+ 15 files changed, 208 insertions(+)
+ create mode 100644 .idea/.gitignore
+ create mode 100644 .idea/inspectionProfiles/profiles_settings.xml
+ create mode 100644 .idea/misc.xml
+ create mode 100644 .idea/modules.xml
+ create mode 100644 .idea/python_zaid_projects.iml
+ create mode 100644 .idea/vcs.xml
+ create mode 100644 arp-spoofing/arp-spoof.py
+ create mode 100644 charan_perimeter.py
+ create mode 100644 mac_address_changer1.py
+ create mode 100644 mac_address_changer2.py
+ create mode 100644 mac_changer_commandlinearg.py
+ create mode 100644 main.py
+ create mode 100644 network-scanner/network_scanner.py
+ create mode 100644 network-scanner/network_scanner1_allinsubnet.py
+ create mode 100644 network-scanner/networkscanner2.py
+
+...
+
+c) login into github using: gh auth login
+
+...
+C:\Users\Maheswaran>gh auth login
+? Where do you use GitHub? GitHub.com
+? What is your preferred protocol for Git operations on this host? HTTPS
+? Authenticate Git with your GitHub credentials? Yes
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: 9100-1503
+Press Enter to open https://github.com/login/device in your browser...
+✓ Authentication complete.
+- gh config set -h github.com git_protocol https
+✓ Configured git protocol
+✓ Logged in as maheshneyveli22
+
+....
+
+d) push existing project to remote :
+
+d.1) create repo in github and clone in local 
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects (master)
+$ git clone https://github.com/maheshneyveli22/zaid_repo.git
+Cloning into 'zaid_repo'...
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 12 (delta 1), reused 9 (delta 1), pack-reused 0 (from 0)
+Receiving objects: 100% (12/12), done.
+Resolving deltas: 100% (1/1), done.
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects
+$ git status
+fatal: not a git repository (or any of the parent directories): .git
+
+d.2) ensure that all your code in moved in zaid_repo 
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects
+$ cd zaid_repo/
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects/zaid_repo (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        arp-spoofing/
+        charan_perimeter.py
+        mac_address_changer1.py
+        mac_address_changer2.py
+        mac_changer_commandlinearg.py
+        main.py
+        network-scanner/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+d.3) use git add and add files to local repo 
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects/zaid_repo (main)
+$ git add .
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects/zaid_repo (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   arp-spoofing/arp-spoof.py
+        new file:   charan_perimeter.py
+        new file:   mac_address_changer1.py
+        new file:   mac_address_changer2.py
+        new file:   mac_changer_commandlinearg.py
+        new file:   main.py
+        new file:   network-scanner/network_scanner.py
+        new file:   network-scanner/network_scanner1_allinsubnet.py
+        new file:   network-scanner/networkscanner2.py
+
+d.4) commit the files using git commit 
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects/zaid_repo (main)
+$ git commit -m "commit  local to remote"
+[main 78bd1f7] commit  local to remote
+ 9 files changed, 170 insertions(+)
+ create mode 100644 arp-spoofing/arp-spoof.py
+ create mode 100644 charan_perimeter.py
+ create mode 100644 mac_address_changer1.py
+ create mode 100644 mac_address_changer2.py
+ create mode 100644 mac_changer_commandlinearg.py
+ create mode 100644 main.py
+ create mode 100644 network-scanner/network_scanner.py
+ create mode 100644 network-scanner/network_scanner1_allinsubnet.py
+ create mode 100644 network-scanner/networkscanner2.py
+
+
+d.4) push the files to remote : 
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects/zaid_repo (main)
+$ git push
+Enumerating objects: 14, done.
+Counting objects: 100% (14/14), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (11/11), done.
+Writing objects: 100% (13/13), 3.16 KiB | 1.05 MiB/s, done.
+Total 13 (delta 1), reused 1 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/maheshneyveli22/zaid_repo.git
+   073477b..78bd1f7  main -> main
+
+Maheswaran@Mahesh MINGW64 /e/zaid_mahe/python_zaid_projects/zaid_repo (main)
+$
+
+
+
+e) overall steps:https://medium.com/@rahulsharan512/how-to-connect-git-bash-to-your-github-account-two-easy-methods-a332e037dea5
+....
+mkdir testfolderforcredentials
+cd testfolderforcredentials
+git clone 'Your GitHub Repo URL'
+ls
+cd 'repo name'
+vi testfile
+cat testfile
+git status
+git add testfile
+git status
+git commit -m "this is test file for credentials- 1st method"
+git push
+...
