@@ -1,4 +1,4 @@
-find interfaces in windows using power shell; by using command - netsh interface show interface
+1) find interfaces in windows using power shell; by using command - netsh interface show interface
 
 
 PS C:\Users\gs1-maheswarane> netsh interface show interface
