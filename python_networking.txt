@@ -1,0 +1,10 @@
+find interfaces in windows using power shell; by using command - netsh interface show interface
+
+
+PS C:\Users\gs1-maheswarane> netsh interface show interface
+
+Admin State    State          Type             Interface Name
+-------------------------------------------------------------------------
+Enabled        Disconnected   Dedicated        Ethernet
+Enabled        Connected      Dedicated        Ethernet 4
+Enabled        Disconnected   Dedicated        Wi-Fi
