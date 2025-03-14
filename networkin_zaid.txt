@@ -1,3 +1,0 @@
-1) to enable ip forwarding in linux machine
--> use below command
-->  echo 1 -> /proc/sys/net/ipv4/ip_forward

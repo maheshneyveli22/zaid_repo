@@ -8,3 +8,17 @@ Admin State    State          Type             Interface Name
 Enabled        Disconnected   Dedicated        Ethernet
 Enabled        Connected      Dedicated        Ethernet 4
 Enabled        Disconnected   Dedicated        Wi-Fi
+
+
+2)
+Berkeley packet filter
+https://biot.com/capstats/bpf.html
+
+3) to enable ip forwarding in linux machine
+-> use below command
+->  echo 1 -> /proc/sys/net/ipv4/ip_forward
+
+2) great hackers :
+https://hackerone.com/ahacker1
+https://github.com/p-  Peter Stockli
+
