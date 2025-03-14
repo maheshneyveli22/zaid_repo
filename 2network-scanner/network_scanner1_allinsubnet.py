@@ -5,8 +5,8 @@ from scapy.layers.l2 import *
 def scan(ip):
     scapy.layers.l2.arping(ip)
 
+# scan("10.249.5.1/22")
 scan("192.168.29.1/24")
-#scan("192.168.177.2/24")
 
 # o/p:
 # C:\Users\Maheswaran\AppData\Local\Programs\Python\Python311\python.exe E:\zaid_mahe\python_zaid_projects\network-scanner\network_scanner.py

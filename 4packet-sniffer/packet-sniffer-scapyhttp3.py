@@ -12,7 +12,7 @@ def sniff(interface):#
 
 def process_sniffed_packet(packet):
     if packet.haslayer(http.HTTPRequest):
-        print(packet.summary())
+        print(packet.show())
 
 
 # find interfaces in windows using power shell; by using command - netsh interface show interface
