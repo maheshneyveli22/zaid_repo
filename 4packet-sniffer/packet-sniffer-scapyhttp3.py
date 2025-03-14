@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 import scapy.all as scapy
-
+from scapy.layers import http 
 
 
 def sniff(interface):#
-    scapy.sniff(iface=interface, store=False, prn=process_sniffed_packet, filter="port 80")
+    scapy.sniff(iface=interface, store=False, prn=process_sniffed_packet)
 
-#if we want to filter different things, we can give : "udp" or "port 21" for ftp, "arp", "tcp" , "port 80" for webservers 
-# now we need new module scapy-http to filter 
+
+
 
 
 def process_sniffed_packet(packet):
-    print(packet)
+    if packet.haslayer(http.HTTPRequest):
+        print(packet.summary())
+
 
 # find interfaces in windows using power shell; by using command - netsh interface show interface
 #
@@ -25,5 +27,5 @@ def process_sniffed_packet(packet):
 # Enabled        Disconnected   Dedicated        Wi-Fi
 
 
-#sniff("Ethernet 4")
-sniff("Wi-Fi")
+sniff("Ethernet 4")
+#sniff("Wi-Fi")

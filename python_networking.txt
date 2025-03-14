@@ -18,7 +18,13 @@ https://biot.com/capstats/bpf.html
 -> use below command
 ->  echo 1 -> /proc/sys/net/ipv4/ip_forward
 
-2) great hackers :
+4) great hackers :
 https://hackerone.com/ahacker1
 https://github.com/p-  Peter Stockli
+
+5) to filter http packets in python use scapy-http
+t(k*n
+6) externalgit_expeditors/glpat-786uSUea2FX7qzkx3HkQ
+
+
 
