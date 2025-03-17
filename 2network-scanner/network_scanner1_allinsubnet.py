@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import scapy.layers.l2
+import scapy
 from scapy.layers.l2 import *
 
 def scan(ip):
