@@ -27,4 +27,16 @@ t(k*n
 6) externalgit_expeditors/-786uSUea2FX7qzkx3HkQ
 
 
+7) Intercept packets
+a) First store it in queue using ip tables command
+-> Thus by executing below command all requests will be trapped
+
+iptables -I FORWARD -j NFQUEUE --queue-num 0
+
+b) Next step is to access this queue from python program
+-> To do this, first we need to install netfilterqueue module
+
+c) Write python program to access the queue and modify the packets
+
+
 
