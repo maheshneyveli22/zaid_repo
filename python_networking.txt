@@ -31,7 +31,26 @@ t(k*n
 a) First store it in queue using ip tables command
 -> Thus by executing below command all requests will be trapped
 
+-> here forward is for incoming packets
 iptables -I FORWARD -j NFQUEUE --queue-num 0
+-> to test in local machine, packets wont be going to FORWARD CHAIN
+-> Packets go to forward chain only if they come from different computer
+-> To test in local machine, we need to change this rule and mark the chain
+that we want to trap packets is output chain, OUTPUT chain is the chain where the packets leaving my computer will go through
+
+iptables -I OUTPUT -j NFQUEUE --queue-num 0
+
+-> Run the command again for ip tables , but with INPUT chain, these are the packets coming to my computer
+iptables -I INPUT -j NFQUEUE --queue-num 0
+
+-> THus by using these two commands, by redirecting the output and input
+chain to my Queue, all requests and responses sent to my computer will be
+trapped into this queue and then i will be able to  use my python program
+-> Thus only thing that is going to differ from local machine or a remote machine with ARP spoofing is the
+IP tables rules  . If you are testing against remote computer or targeting local computer
+-> Remote computer means : we should redirect FORWARD chain to your queue
+-> If testing on local machine, then redirect output and input chains
+
 
 b) Next step is to access this queue from python program
 -> To do this, first we need to install netfilterqueue module

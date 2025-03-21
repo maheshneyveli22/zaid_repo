@@ -12,8 +12,9 @@ import netfilterqueue
 #
 # c) Write python program to access the queue and modify the packets
 ###############################
-# This program just allows or drops the packets, modifying packets will be done in another program
+# This  program helps to modify packets
 ###############################
+
 #call back function
 def process_packet(packet):
     print(packet)
