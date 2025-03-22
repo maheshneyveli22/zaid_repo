@@ -53,9 +53,9 @@ def process_packet(packet):
 # Here rdata field is the field that contains the IP, which is the same
 # IP which we received while we pinged bing.com
 
-So this is the field which we want to modify first
-    rdata = "204.79.197.200"
-But before we modify this field, we only want to modify this field whenever the user tries to go to bing.com
+# So this is the field which we want to modify first
+#     rdata = "204.79.197.200"
+# But before we modify this field, we only want to modify this field whenever the user tries to go to bing.com
 
 
 
