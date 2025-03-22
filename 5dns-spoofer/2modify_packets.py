@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import netfilterqueue
+import scapy.all as scapy
+
 
 # Intercept packets
 # a) First store it in queue using ip tables command
@@ -17,11 +19,15 @@ import netfilterqueue
 
 #call back function
 def process_packet(packet):
-    print(packet)
+    #converting packet to scapy packet
+    scapy_packet = scapy.IP(packet.get_payload())
+    print(packet.get_payload())
     # Option1: accept method will forward the packet to its destination, thus internet will be allowed
     packet.accept()
     # Option2 : drop the packet or cut the internet of the target client
     #packet.drop()
+
+# once done remove the ip tables by using command iptables --flush 
 
 
 
