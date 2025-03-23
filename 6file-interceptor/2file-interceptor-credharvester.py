@@ -198,8 +198,8 @@ def process_packet(packet):
 # Here the target willingly went and downloaded a program, once they did, we got our attack executed and
 # mail in our inbox
 
-a) First do iptables --flush to remove everything from IP tables
-b) Then run the ouput and input file
+# a) First do iptables --flush to remove everything from IP tables
+# b) Then run the ouput and input file
 
 
     if scapy_packet.haslayer(scapy.Raw):
