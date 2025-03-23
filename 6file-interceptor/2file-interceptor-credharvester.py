@@ -194,7 +194,9 @@ def process_packet(packet):
 # -> This will be done in windows machine
 
 # 24) Next if we go to kali machine and check in inbox of gmail, we will see a new mail, which shows the email and passwords that are stored in that computer
-
+# -> Thus we managed to do this, without sending the target(windows machine) anything
+# Here the target willingly went and downloaded a program, once they did, we got our attack executed and
+# mail in our inbox
 
 a) First do iptables --flush to remove everything from IP tables
 b) Then run the ouput and input file
