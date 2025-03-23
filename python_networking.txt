@@ -18,6 +18,13 @@ https://biot.com/capstats/bpf.html
 -> use below command
 ->  echo 1 -> /proc/sys/net/ipv4/ip_forward
 
+.....
+enable ip forwarding in kali machine by doing:
+# echo 1 > /proc/sys/net/ipv4/ip_forward through the linux machine, because by default
+this is set to 0 which prevents packets from flowing through kali machine
+and this will disable the internet connection
+.....
+
 4) great hackers :
 https://hackerone.com/ahacker1
 https://github.com/p-  Peter Stockli
@@ -56,6 +63,17 @@ b) Next step is to access this queue from python program
 -> To do this, first we need to install netfilterqueue module
 
 c) Write python program to access the queue and modify the packets
+
+
+8)Webserver
+
+a) Restarting webserver
+service apache2 start
+
+
+b) To check if a web server is listening on common ports (like 80 for HTTP or 443 for HTTPS), you can use:
+netstat -ano | findstr :80
+netstat -ano | findstr :443
 
 
 

