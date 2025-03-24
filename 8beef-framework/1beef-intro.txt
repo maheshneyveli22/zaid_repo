@@ -1,0 +1,26 @@
+https://www.udemy.com/course/learn-python-and-ethical-hacking-from-scratch/learn/lecture/10821606#overview
+
+CLIENT SIDE ATTACKS  - BEEF FRAMEWORK
+
+1) Beef - Browser Exploitation framework
+-> BEEF allows us to launch a number of attacks on a hooked target
+-> Targets are hooked once they load a hook url
+        -> DNS spoof requests to a page containing the hook
+        -> Inject the hook in browsed pages(need to be MITM)
+        -> Use XSS exploit
+        -> Social engineer the target to open a hook page
+
+2) command to install beef in kali machine
+-> first do ap-get update:
+    #apt-get update
+-> install beef-xss
+    #aapt-get install beef-xss
+
+-> Above command installs all libraries for BEEF and configures Beef
+
+3) From Kali Machine we can access Beef:
+start using: beef start
+
+-> Set password for beef user
+
+-> Then it starts beef framework and goes to the firefox to go to beef web interface to access beef
