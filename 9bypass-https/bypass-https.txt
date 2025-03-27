@@ -1,0 +1,31 @@
+1) by passing HTTPs - by ARP spoofing with SSLStrip
+-> WHen user types www.bbc.com -> Request goes to hacker computer who is Man in the middle and running a tool called SSLstrip which implements Moxie's attack
+a) SSL Strip on seeing the http request, it does not do anything and forwards it to the internet
+b) Next bbc.com is going to respond by asking client to communicate via https.
+c) SSLstrip tool will detect this and remove the information/fields which bbc.com says " why dont we communicate via https"
+d) As a result victim does not know that server can communicate via https and therefore it will send its next request as normal http request
+e) But SSLStrip knows that BBC.com still wants to communicate via https, so SSLStrip will receive http connection from Client and upgrade that connection to a https connection
+-> now bbc.com also responds with a https communication
+f) Hence in this scenario, client thinks that bbc.com does not support https and communicates only via http
+-> While bbc.com still communicates over https
+g) Another thing that sslstrip could do is: When it loads a webpage, it will convert all the links in the page from HTTPS  to a normal http
+-> By this way from machine where arp spoofing is implemented i.e Kali machine we can view all the http requests as http, even though communication between bbc.com and kali machine is https
+
+
+2) Exception:
+a) There is exception to this whole rule, where websites that use hsts
+......
+HSTS - HTTP Strict Tranport Security
+
+-> HSTS forces web browsers to interact with websites only through secure HTTPS connections, preventing them from using the less secure HTTP.
+######How it Works:
+-> When a web server implements HSTS, it sends a special HTTP header (Strict-Transport-Security) to the user's browser over an HTTPS connection.
+-> This header instructs the browser to:
+-> Always use HTTPS when accessing the website, even if the user types "http://" in the address bar.
+-> Automatically upgrade any HTTP links to HTTPS.
+Prevent users from bypassing browser warnings about invalid SSL/TLS certificates.
+
+............
+
+b) HSTS is used by google, facebook, paypal etc
+c) Also in hsts, browser comes up with a list of hardcoded websites that should only load as https - so even if we do sslstrip
